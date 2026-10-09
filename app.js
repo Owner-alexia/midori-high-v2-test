@@ -212,13 +212,42 @@ async function currentUser() {
   if (r.error) throw r.error;
   return r.data.user;
 }
+javascript
 async function currentProfile() {
   const user = await currentUser();
   if (!user) return null;
-  const r = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
-  if (r.error) throw r.error;
-  return r.data;
+
+  // Retrouver la personne liée au compte Supabase Auth.
+  const personResult = await sb
+    .from('midori_people')
+    .select('id, active')
+    .eq('auth_user_id', user.id)
+    .maybeSingle();
+
+  if (personResult.error) throw personResult.error;
+  if (!personResult.data || personResult.data.active === false) return null;
+
+  // Retrouver le profil lié à cette personne.
+  const profileResult = await sb
+    .from('profiles')
+    .select('*')
+    .eq('person_id', personResult.data.id)
+    .eq('active', true)
+    .maybeSingle();
+
+  if (profileResult.error) throw profileResult.error;
+  if (!profileResult.data) return null;
+
+  const profile = profileResult.data;
+
+  // Adapter le rôle de la nouvelle base aux rôles attendus par le site.
+  if (profile.role === 'administrateur') {
+    profile.role = 'admin';
+  }
+
+  return profile;
 }
+
 async function guard(roles = []) {
   const s = await session();
   if (!s) { location.href = 'index.html'; return null; }
