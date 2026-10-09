@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Dossier élève — Midori High</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7f6;
+        color: #1f2937;
+        min-height: 100vh;
+    }
+
+    .topbar {
+        height: 70px;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #2f6f5e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .brand strong {
+        display: block;
+        font-size: 17px;
+    }
+
+    .brand span {
+        font-size: 12px;
+        color: #6b7280;
+    }
+
+    .layout {
+        display: flex;
+        min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+        width: 240px;
+        background: #183d34;
+        padding: 25px 15px;
+        color: white;
+    }
+
+    .sidebar-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.6;
+        margin: 10px 12px;
+    }
+
+    .nav-item {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+        background: #2f6f5e;
+    }
+
+    .main {
+        flex: 1;
+        padding: 35px;
+    }
+
+    .back {
+        display: inline-block;
+        color: #2f6f5e;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .back:hover {
+        text-decoration: underline;
+    }
+
+    .profile-header {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        margin-bottom: 25px;
+    }
+
+    .avatar {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: #2f6f5e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .profile-info h1 {
+        font-size: 26px;
+        margin-bottom: 7px;
+    }
+
+    .profile-info p {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .status {
+        margin-left: auto;
+        background: #eef4f1;
+        color: #2f6f5e;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .section {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .section-title {
+        padding: 18px 22px;
+        background: #f8faf9;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info {
+        padding: 20px 22px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info:nth-child(odd) {
+        border-right: 1px solid #f0f0f0;
+    }
+
+    .label {
+        display: block;
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
+
+    .value {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    /* STATISTIQUES ABSENCES */
+
+    .absence-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 20px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .absence-stat {
+        background: #f8faf9;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 18px;
+        text-align: center;
+    }
+
+    .absence-stat-number {
+        font-size: 25px;
+        font-weight: bold;
+        color: #2f6f5e;
+        margin-bottom: 5px;
+    }
+
+    .absence-stat-label {
+        font-size: 12px;
+        color: #6b7280;
+    }
+
+    /* TABLE ABSENCES */
+
+    .absence-table-container {
+        overflow-x: auto;
+    }
+
+    .absence-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .absence-table th {
+        background: #f8faf9;
+        color: #6b7280;
+        font-size: 11px;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 14px 18px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .absence-table td {
+        padding: 15px 18px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 14px;
+    }
+
+    .absence-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 9px;
+        border-radius: 15px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .badge-absence {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .badge-retard {
+        background: #fff7ed;
+        color: #ea580c;
+    }
+
+    .badge-justifie {
+        background: #ecfdf5;
+        color: #059669;
+    }
+
+    .badge-non-justifie {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .empty-section {
+        padding: 30px;
+        text-align: center;
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 80px;
+        color: #6b7280;
+    }
+
+    .error {
+        background: #fef2f2;
+        color: #dc2626;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 800px) {
+
+        .absence-stats {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        .sidebar {
+            display: none;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .profile-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .status {
+            margin-left: 0;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info:nth-child(odd) {
+            border-right: none;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+```
+<div class="brand">
+
+    <div class="logo">
+        MH
+    </div>
+
+    <div>
+        <strong>Midori High</strong>
+        <span>Portail administratif</span>
+    </div>
+
+</div>
+
+<div>
+    <strong>Administration</strong>
+    <span>Administrateur</span>
+</div>
+```
+
+</header>
+
+<div class="layout">
+
+```
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        Administration
+    </div>
+
+    <a href="dashboard.html" class="nav-item">
+        📊 Tableau de bord
+    </a>
+
+    <a href="students.html" class="nav-item active">
+        👨‍🎓 Élèves
+    </a>
+
+    <a href="#" class="nav-item">
+        👨‍🏫 Professeurs
+    </a>
+
+    <a href="#" class="nav-item">
+        👮 Surveillants
+    </a>
+
+    <a href="#" class="nav-item">
+        🏫 Classes
+    </a>
+
+
+    <div class="sidebar-title">
+        Scolarité
+    </div>
+
+    <a href="#" class="nav-item">
+        📚 Matières
+    </a>
+
+    <a href="#" class="nav-item">
+        🕐 Emplois du temps
+    </a>
+
+    <a href="#" class="nav-item">
+        📝 Notes
+    </a>
+
+    <a href="absences.html" class="nav-item">
+        📋 Absences
+    </a>
+
+</aside>
+
+
+<main class="main">
+
+    <a href="students.html" class="back">
+        ← Retour à la liste des élèves
+    </a>
+
+
+    <div id="content">
+
+        <div class="loading">
+            Chargement du dossier...
+        </div>
+
+    </div>
+
+</main>
+```
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://esiwwkphbqkqqcfelktn.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_Gn6H6hpZXdeoaWhW7jRWLw_D3dXLTnX";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+// ===============================
+// VÉRIFICATION UTILISATEUR
+// ===============================
+
+async function checkUser() {
+
+    const { data } =
+        await supabaseClient.auth.getUser();
+
+    if (!data.user) {
+
+        window.location.href = "index.html";
+
+        return false;
+    }
+
+    return true;
+}
+
+
+// ===============================
+// RÉCUPÉRER L'ID DE L'ÉLÈVE
+// ===============================
+
+function getStudentId() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get("id");
+}
+
+
+// ===============================
+// ÉCHAPPER LE HTML
+// ===============================
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+// ===============================
+// AFFICHER UNE ERREUR
+// ===============================
+
+function showError(message) {
+
+    document.getElementById("content").innerHTML = `
+
+        <div class="error">
+            ${escapeHTML(message)}
+        </div>
+
+    `;
+}
+
+
+// ===============================
+// FORMATTER UNE DATE
+// ===============================
+
+function formatDate(date) {
+
+    if (!date) return "—";
+
+    const parts = date.split("-");
+
+    if (parts.length !== 3) {
+        return date;
+    }
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+
+// ===============================
+// CHARGER LES ABSENCES
+// ===============================
+
+async function loadAbsences(studentId) {
+
+    const { data, error } =
+        await supabaseClient
+            .from("absences")
+            .select("*")
+            .eq("student_id", studentId)
+            .order("date", {
+                ascending: false
+            })
+            .order("created_at", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error(
+            "Erreur chargement absences :",
+            error
+        );
+
+        return {
+            data: [],
+            error
+        };
+    }
+
+    return {
+        data: data || [],
+        error: null
+    };
+}
+
+
+// ===============================
+// CONSTRUIRE LA SECTION ABSENCES
+// ===============================
+
+function buildAbsencesSection(absences) {
+
+    const totalAbsences =
+        absences.filter(
+            item => item.type === "absence"
+        ).length;
+
+    const totalRetards =
+        absences.filter(
+            item => item.type === "retard"
+        ).length;
+
+    const totalJustifiees =
+        absences.filter(
+            item => item.justifie === true
+        ).length;
+
+
+    let historyHTML = "";
+
+
+    if (absences.length === 0) {
+
+        historyHTML = `
+
+            <div class="empty-section">
+                Aucun retard ou aucune absence enregistré pour cet élève.
+            </div>
+
+        `;
+
+    } else {
+
+        historyHTML = `
+
+            <div class="absence-table-container">
+
+                <table class="absence-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Heure
+                            </th>
+
+                            <th>
+                                Motif
+                            </th>
+
+                            <th>
+                                Justification
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${absences.map(item => {
+
+                            const typeHTML =
+                                item.type === "absence"
+
+                                ? `
+                                    <span class="badge badge-absence">
+                                        Absence
+                                    </span>
+                                `
+
+                                : `
+                                    <span class="badge badge-retard">
+                                        Retard
+                                    </span>
+                                `;
+
+
+                            const justificationHTML =
+                                item.justifie
+
+                                ? `
+                                    <span class="badge badge-justifie">
+                                        ✓ Justifiée
+                                    </span>
+                                `
+
+                                : `
+                                    <span class="badge badge-non-justifie">
+                                        ✕ Non justifiée
+                                    </span>
+                                `;
+
+
+                            return `
+
+                                <tr>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            formatDate(item.date)
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${typeHTML}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            item.heure_arrivee || "—"
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            item.motif || "—"
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${justificationHTML}
+                                    </td>
+
+                                </tr>
+
+                            `;
+
+                        }).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return `
+
+        <div class="section">
+
+            <div class="section-title">
+                📅 Absences et retards
+            </div>
+
+
+            <div class="absence-stats">
+
+                <div class="absence-stat">
+
+                    <div class="absence-stat-number">
+                        ${totalAbsences}
+                    </div>
+
+                    <div class="absence-stat-label">
+                        Absence${totalAbsences > 1 ? "s" : ""}
+                    </div>
+
+                </div>
+
+
+                <div class="absence-stat">
+
+                    <div class="absence-stat-number">
+                        ${totalRetards}
+                    </div>
+
+                    <div class="absence-stat-label">
+                        Retard${totalRetards > 1 ? "s" : ""}
+                    </div>
+
+                </div>
+
+
+                <div class="absence-stat">
+
+                    <div class="absence-stat-number">
+                        ${totalJustifiees}
+                    </div>
+
+                    <div class="absence-stat-label">
+                        Justifiée${totalJustifiees > 1 ? "s" : ""}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            ${historyHTML}
+
+        </div>
+
+    `;
+}
+
+
+// ===============================
+// AFFICHER LE DOSSIER
+// ===============================
+
+function displayStudent(student, absences) {
+
+    const fullName =
+        student.full_name || "Élève";
+
+
+    const initials =
+        fullName
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(
+                word =>
+                    word.charAt(0)
+            )
+            .join("")
+            .toUpperCase();
+
+
+    document.getElementById("content").innerHTML = `
+
+        <div class="profile-header">
+
+            <div class="avatar">
+                ${escapeHTML(initials)}
+            </div>
+
+            <div class="profile-info">
+
+                <h1>
+                    ${escapeHTML(fullName)}
+                </h1>
+
+                <p>
+                    Dossier scolaire — Midori High
+                </p>
+
+            </div>
+
+            <div class="status">
+                Élève
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="section-title">
+                👤 Informations personnelles
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info">
+
+                    <span class="label">
+                        Nom complet
+                    </span>
+
+                    <span class="value">
+                        ${escapeHTML(
+                            student.full_name || "—"
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        Identifiant
+                    </span>
+
+                    <span class="value">
+                        ${escapeHTML(
+                            student.username || "—"
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        Classe
+                    </span>
+
+                    <span class="value">
+                        ${escapeHTML(
+                            student.class_name || "—"
+                        )}
+                    </span>
+
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="section-title">
+                📋 Scolarité
+            </div>
+
+            <div class="empty-section">
+                Les informations de scolarité seront disponibles ici.
+            </div>
+
+        </div>
+
+
+        ${buildAbsencesSection(absences)}
+
+
+        <div class="section">
+
+            <div class="section-title">
+                📝 Notes
+            </div>
+
+            <div class="empty-section">
+                Les notes de l'élève seront affichées ici.
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="section-title">
+                ⚠️ Sanctions et comportement
+            </div>
+
+            <div class="empty-section">
+                Aucune sanction enregistrée.
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+// ===============================
+// CHARGER LE DOSSIER COMPLET
+// ===============================
+
+async function loadStudent() {
+
+    const connected =
+        await checkUser();
+
+    if (!connected) return;
+
+
+    const studentId =
+        getStudentId();
+
+
+    if (!studentId) {
+
+        showError(
+            "Aucun élève n'a été sélectionné."
+        );
+
+        return;
+    }
+
+
+    // Récupération de l'élève
+
+    const {
+        data: student,
+        error: studentError
+    } =
+        await supabaseClient
+            .from("students")
+            .select("*")
+            .eq("id", studentId)
+            .single();
+
+
+    if (studentError) {
+
+        console.error(
+            "Erreur élève :",
+            studentError
+        );
+
+        showError(
+            "Impossible de charger le dossier de cet élève."
+        );
+
+        return;
+    }
+
+
+    if (!student) {
+
+        showError(
+            "Élève introuvable."
+        );
+
+        return;
+    }
+
+
+    // Récupération des absences
+
+    const {
+        data: absences,
+        error: absenceError
+    } =
+        await loadAbsences(studentId);
+
+
+    if (absenceError) {
+
+        console.error(
+            "Erreur absences :",
+            absenceError
+        );
+
+        // On continue quand même à afficher
+        // le dossier de l'élève.
+
+        displayStudent(
+            student,
+            []
+        );
+
+        return;
+    }
+
+
+    displayStudent(
+        student,
+        absences
+    );
+
+}
+
+
+// ===============================
+// LANCEMENT
+// ===============================
+
+loadStudent();
+
+</script>
+
+</body>
+</html>

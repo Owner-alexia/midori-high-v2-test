@@ -1,0 +1,40 @@
+MIDORI HIGH — VERSION V8
+
+1. REMPLACER LE SITE
+--------------------
+Remplace les fichiers de ton ancien site par le contenu de ce dossier.
+Ne colle pas seulement des morceaux de app.js : cette version contient le app.js COMPLET.
+
+2. CONNEXION
+------------
+La connexion se fait uniquement avec l'e-mail du compte Supabase Authentication.
+Le champ "admin ou pseudo Roblox" a été supprimé.
+Le bouton "Mot de passe oublié ?" a été remplacé par un message qui demande de contacter l'administration.
+Aucun e-mail réel ne sera envoyé depuis cette page.
+
+3. SUPPRESSION DEFINITIVE DES COMPTES
+-------------------------------------
+Dans Supabase > Edge Functions > admin-delete-user, remplace le contenu de index.ts par :
+
+supabase/functions/admin-delete-user/index.ts
+
+Puis clique sur Deploy function.
+
+4. NE PAS MODIFIER
+------------------
+- Ne change pas la clé Publishable de config.js.
+- Ne supprime aucun ancien Query SQL.
+- Ne mets jamais une clé sb_secret_... dans le site.
+
+5. LOGO
+--------
+Le logo fourni par Ilana est maintenant utilisé dans :
+assets/midori-high-logo.jpeg
+
+6. TEST
+--------
+Après remplacement :
+- recharge avec Ctrl+F5 ;
+- teste la connexion avec l'e-mail exact du compte Supabase ;
+- teste ensuite un autre compte ;
+- teste enfin la suppression définitive depuis Administration > Accès & comptes.
