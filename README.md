@@ -1,35 +1,22 @@
-# Midori High — portail administratif
+# Midori High V2 — portail administratif
 
-Cette version ajoute une messagerie interne RP, la remise des devoirs avec pièces jointes et les corrections des pages **Accès & comptes**, **Notes** et **Calendrier RP**.
+Ce dossier est une reconstruction cliente raccordée au nouveau projet Supabase V2. Il conserve l'ancien projet séparé. Les données scolaires ne sont pas importées.
 
-## Installation GitHub Pages
-1. Décompresser ce dossier.
-2. Envoyer tout son contenu à la racine du dépôt GitHub, pas le ZIP lui-même.
-3. Conserver `config.js` et `app.js` de cette version ensemble.
+## Avant publication
+1. Dans le nouveau projet Supabase, ouvrez **SQL Editor**.
+2. Si vous avez déjà exécuté les scripts de base V2 et associé le compte administrateur, exécutez `INSTALLATION_V2_SQL.sql` en entier. Ce script ajoute les tables des modules complémentaires ; il ne supprime pas les tables existantes.
+3. Vérifiez que `config.js` contient l'URL et la clé **publishable** du nouveau projet. Ne mettez jamais une clé `service_role` ou `secret` dans ce dépôt.
+4. Testez d'abord dans un dépôt GitHub de prévisualisation ou une branche séparée. Ne remplacez le site public qu'après connexion réussie.
+5. Connectez-vous avec l'adresse réelle utilisée dans Supabase Auth et le mot de passe défini dans Supabase. `admin@midori-high.fr` est une adresse RP d'affichage, pas forcément l'identifiant de connexion.
 
-## Installation Supabase
-Le portail existant doit déjà avoir été initialisé avec votre SQL principal.
+## Fonctionnalités de cette reconstruction
+- Connexion Supabase Auth et vérification du profil associé.
+- Pages de gestion génériques pour les profils, classes, matières, cours, clubs, notes, présences, devoirs et affectations du personnel.
+- Tables complémentaires pour le registre WL, messages, rendus, points RP, sanctions, événements, journal, rendez-vous et rapports.
+- Les modules confidentiels non encore implémentés restent désactivés plutôt que de simuler un fonctionnement.
 
-Ensuite, exécuter dans **Supabase → SQL Editor** :
-1. `SUPABASE_MESSAGERIE_DEVOIRS.sql` pour installer/mettre à jour la messagerie et les remises de devoirs.
-2. `SUPABASE_REPARATIONS.sql` pour réparer les permissions de suppression des messages, la gestion des accès, les colonnes des notes et le calendrier RP.
-
-Le fichier `SUPABASE_REPARATIONS.sql` ne supprime pas vos données.
-
-## Corrections incluses
-- Messagerie : suppression possible d’un message reçu **ou** envoyé, avec suppression de ses pièces jointes ; bouton disponible dans la liste et dans l’ouverture du message.
-- Envoi : le bouton passe à « Envoi… » pendant le traitement pour éviter les doubles envois causés par plusieurs clics.
-- Accès & comptes : bouton **Modifier** pour changer rôle, nom, identifiant, état et fiche liée ; **Révoquer l’accès** désactive l’accès au portail sans supprimer l’utilisateur Supabase Authentication ; **Réactiver** permet de le remettre actif.
-- Notes : migration de compatibilité pour les anciennes tables `grades` qui n’avaient pas la colonne `value`.
-- Calendrier RP : table et policies vérifiées/créées par le SQL de réparation.
-
-## Important
-La révocation d’un accès agit sur `profiles.active`. Elle empêche l’utilisateur d’utiliser le portail mais ne supprime pas son compte dans **Supabase Authentication**. Une suppression définitive d’un utilisateur Auth doit rester une opération serveur protégée.
-
-
-## Suppression définitive des comptes
-La page **Accès & comptes** possède **🗑️ Supprimer définitivement** via la Supabase Edge Function `admin-delete-user`. Voir `INSTALLER_SUPPRESSION_COMPTE.txt`.
-
-
-## V9 — WL & profils multiples
-Voir `INSTALLATION_V9.md` et `sql/V9_WL_PROFILS.sql`.
+## Limites et sécurité
+- Le code a été vérifié statiquement, mais la connexion au projet distant n'a pas pu être exécutée depuis cet environnement. Il faut tester avec le compte administrateur avant mise en production.
+- Les tables V2 et les tables ajoutées par `INSTALLATION_V2_SQL.sql` sont actuellement prévues pour l'accès du gérant. Les politiques dédiées aux élèves et aux autres membres du personnel doivent être définies avant de leur ouvrir ces modules.
+- Les formulaires sont des écrans de gestion génériques, pas une reproduction complète de chaque flux de l'ancien site. Les modules médicaux confidentiels restent indisponibles.
+- Le script SQL complémentaire est réexécutable et n'efface pas les données. Il doit être exécuté uniquement dans le nouveau projet V2.
