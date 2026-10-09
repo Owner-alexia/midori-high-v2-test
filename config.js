@@ -1,7 +1,7 @@
 window.MIDORI_CONFIG = {
-  SUPABASE_URL: "https://esiwwkphbqkqqcfelktn.supabase.co",
-  SUPABASE_KEY: "sb_publishable_Gn6HhpZXdeoaWhWJ7wRWLw_D3dXLTnX",
-  ADMIN_EMAIL: "nana.udo@midori.fr"
+  SUPABASE_URL: "https://wvekxecquvgvongjnypz.supabase.co",
+  SUPABASE_KEY: "sb_publishable_tsSw_Q544AGnZ_gaX7iYAg_KIX1JS3i",
+  SCHOOL_LABEL: "Midori High V2"
 };
 
-window.MIDORI_BUILD = "messagerie-devoirs-2026-09-29-v7";
+window.MIDORI_BUILD = "midori-v2-rebuild-2026-10-09";
