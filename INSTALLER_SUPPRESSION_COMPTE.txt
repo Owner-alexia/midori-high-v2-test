@@ -1,0 +1,28 @@
+AJOUT — SUPPRESSION DÉFINITIVE DES COMPTES
+
+Cette version ajoute un bouton « 🗑️ Supprimer définitivement » dans Administration > Accès & comptes.
+
+Tu ne recommences PAS ton site. Tu remplaces simplement les fichiers par cette version, puis tu fais une installation unique de la fonction ci-dessous dans Supabase.
+
+INSTALLATION UNIQUE DANS SUPABASE
+
+1. Ouvre ton projet Supabase.
+2. Dans le menu de gauche : Edge Functions.
+3. Clique sur « Deploy a new function » puis « Via Editor ».
+4. Nom de la fonction : admin-delete-user
+5. Remplace le code proposé par le contenu de :
+   supabase/functions/admin-delete-user/index.ts
+6. Clique sur « Deploy function ».
+
+La fonction vérifie que la personne qui appelle l'action est un administrateur actif, interdit l'auto-suppression, nettoie les pièces jointes de la messagerie Midori High concernées, puis supprime l'utilisateur Auth avec l'API admin côté serveur.
+
+Aucune clé secrète ne doit être mise dans app.js ou config.js.
+
+APRÈS LE DÉPLOIEMENT
+
+- Remplace les fichiers du site par cette version.
+- Fais Ctrl + F5.
+- Va dans Administration > Accès & comptes.
+- Tu verras désormais « 🗑️ Supprimer définitivement » pour les autres comptes.
+
+La suppression demande deux confirmations. Ton propre compte administrateur n'affiche pas le bouton.

@@ -1,0 +1,16 @@
+MIDORI HIGH — VERSION V4
+
+1. Cette version utilise exactement la clé Publishable affichée dans Supabase → Project Settings → API Keys.
+2. Ne modifiez pas les Query SQL existants.
+3. Dans Supabase, exécutez uniquement SUPABASE_REPARATIONS.sql dans un NOUVEAU query pour cette correction.
+4. Décompressez/remplacez le dossier du site par cette version.
+5. Faites Ctrl+F5 sur la page de connexion.
+
+Corrections conservées :
+- suppression messages reçus/envoyés ;
+- bouton d'envoi protégé contre les doublons ;
+- modification et révocation/réactivation des accès ;
+- réparation de grades.value / Notes ;
+- réparation du calendrier RP et des policies associées.
+
+Important : le fichier config.js ne contient aucune clé service_role.
