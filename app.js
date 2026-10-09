@@ -212,7 +212,7 @@ async function currentUser() {
   if (r.error) throw r.error;
   return r.data.user;
 }
-javascript
+
 async function currentProfile() {
   const user = await currentUser();
   if (!user) return null;
